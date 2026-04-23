@@ -2,12 +2,12 @@ name: Run Daily Tasa Cambio
 run-name: ${{ github.actor }} is running the daily Tasa Cambio workflow 🚀
 on:
   schedule:
-    - cron: '0 8 * * *' # Runs every day at 8 AM UTC
+    - cron: '0 12 * * *' # Runs every day at 12 PM UTC
   push:
     branches:
       - main
       - develop
-
+  workflow_dispatch:
 jobs:
   Run-Daily-Tasa-Cambio:
     runs-on: ubuntu-latest
@@ -19,10 +19,6 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-      - name: Create Certificate File
-        # Este paso toma el contenido del Secret y lo guarda en un archivo .pem
-        run: |
-          echo "${{ secrets.BCV_CERTIFICADO }}" > bcv_certificado.pem
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -35,7 +31,7 @@ jobs:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_PORT: ${{ secrets.DB_PORT }}
           SCHEMA: ${{ secrets.SCHEMA }}
-          RUTA_CERTIFICADO: "./bcv_certificado.pem"
+          RUTA_CERTIFICADO: ${{ secrets.RUTA_CERTIFICADO }}
         run: |
           python main.py
       - run: echo "🍏 The daily Tasa Cambio workflow has completed with status ${{ job.status }}."
