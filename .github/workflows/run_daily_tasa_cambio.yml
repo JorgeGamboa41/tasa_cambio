@@ -23,7 +23,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run Tasa Cambio Script
+      - name: Set environment variables
+        run: | 
+            echo "Setting environment variables from GitHub Secrets" 
         env:
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_USER: ${{ secrets.DB_USER }}
@@ -32,6 +34,7 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
           SCHEMA: ${{ secrets.SCHEMA }}
           RUTA_CERTIFICADO: ${{ secrets.RUTA_CERTIFICADO }}
+      - name: Run Tasa Cambio Script
         run: |
           python main.py
       - run: echo "🍏 The daily Tasa Cambio workflow has completed with status ${{ job.status }}."
