@@ -3,6 +3,10 @@ run-name: ${{ github.actor }} is running the daily Tasa Cambio workflow 🚀
 on:
   schedule:
     - cron: '0 8 * * *' # Runs every day at 8 AM UTC
+  push:
+    branches:
+      - main
+      - develop
 
 jobs:
   Run-Daily-Tasa-Cambio:
