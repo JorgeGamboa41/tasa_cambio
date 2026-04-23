@@ -5,7 +5,7 @@ from sqlalchemy import Column, Date, DateTime, String, Float
 from .base import Base # Importación relativa
 from ..logger import logger
 
-load_dotenv('config/online/.env')
+load_dotenv()
 class TasaCambio(Base):
     logger.info(f"Definiendo modelo TasaCambio con el Schema ({os.getenv('SCHEMA')})")
     __tablename__ = 'bd_tasa_cambio'

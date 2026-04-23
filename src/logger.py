@@ -17,7 +17,7 @@ def setup_logger():
     console_handler.setFormatter(formatter)
 
     # Manejador para archivo (se guarda en logs/app.log)
-    file_handler = logging.FileHandler('logs/app.log')
+    file_handler = logging.FileHandler('logs/app.log', encoding='utf-8')
     file_handler.setFormatter(formatter)
 
     if not logger.handlers:
