@@ -44,7 +44,7 @@ class BinanceService:
 
             # Guardar usando el repositorio existente
             self.repository.save(nueva_tasa)
-            logger.info(f"Promedio Binance P2P {round(promedio_p2p, 2)} procesado y guardado correctamente.")
+            logger.info(f"Promedio Binance P2P del {datetime.now().date()}, {round(promedio_p2p, 2)} procesado y guardado correctamente.")
 
         except Exception as e:
-            logger.error(f"❌ Error en BinanceService: {e}")
+            logger.error(f"Error en BinanceService: {e}")
