@@ -1,0 +1,41 @@
+name: Run Daily Tasa Cambio
+run-name: ${{ github.actor }} is running the daily Tasa Cambio workflow
+on:
+  schedule:
+    - cron: '0 12 * * mon-fri' # Runs every day at 12 PM UTC, Monday to Friday
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+jobs:
+  Run-Daily-Tasa-Cambio:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out repository code
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tasa Cambio Script
+        env:
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          SCHEMA: ${{ secrets.SCHEMA }}
+          RUTA_CERTIFICADO: ${{ secrets.RUTA_CERTIFICADO }}
+        run: |
+          python main.py
+      - run: echo "The daily Tasa Cambio workflow has completed with status ${{ job.status }}."
